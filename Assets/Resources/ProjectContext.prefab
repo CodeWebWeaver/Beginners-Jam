@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6070506564646839634}
   - component: {fileID: 6618812784513496386}
-  - component: {fileID: 6958122638039036714}
+  - component: {fileID: 714921157458965782}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Zenject::Zenject.ProjectContext
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 6958122638039036714}
+  - {fileID: 714921157458965782}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
       _missingHandlerDefaultResponse: 2
       _requireStrictUnsubscribe: 0
       _defaultAsyncTickPriority: 1
---- !u!114 &6958122638039036714
+--- !u!114 &714921157458965782
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,6 +71,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1995112521005806331}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e58830e2795a74ebbe15634d14e3d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 056897a715547c84bbda8e9c6e859736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameInstaller
+  _gameBootstrapper: {fileID: 8474478275792113933, guid: 7277059b3684d7f4e85607c76224f788, type: 3}

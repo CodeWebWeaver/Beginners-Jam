@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c60f66aa-9c4d-4ea2-86f7-90fa470486a0}">
+		<property name="assetPath">
+			<value>Ambience/Environmental_Extras_Water_Loop_01.ogg</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>10.005351473922902</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a74ee0fb-f61f-4947-941a-7f363ca0744e}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e620b64a-7648-407a-b376-bf808ec50691}">
+		<property name="assetPath">
+			<value>SFX/handMadeButtonClick.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.16800000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{a74ee0fb-f61f-4947-941a-7f363ca0744e}</destination>
+		</relationship>
+	</object>
+</objects>
