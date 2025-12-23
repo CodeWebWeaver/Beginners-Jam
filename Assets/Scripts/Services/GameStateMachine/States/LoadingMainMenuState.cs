@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadingMainMenuState : State {
     private readonly ISceneLoader _sceneLoader;
@@ -10,6 +11,12 @@ public class LoadingMainMenuState : State {
         _sceneData = sceneData;
     }
     public override void Enter() {
+        Scene scene = SceneManager.GetActiveScene();
+
+        if (scene.name == _sceneData.mainMenuScene.SceneName) {
+            StateMachine.ChangeState<MainMenuState>();
+            return;
+        }
 
         LoadScene().Forget();
     }
