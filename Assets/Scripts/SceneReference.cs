@@ -171,31 +171,31 @@ namespace Tymski {
             var statusStyle = EditorStyles.helpBox;
 
             if (buildScene.buildIndex == -1) {
-                statusContent.text = "⚠ НЕ в Build Settings";
-                statusContent.tooltip = "Сцена не додана в Build Settings і не буде включена в білд";
+                statusContent.text = "⚠ Not in Build Settings";
+                statusContent.tooltip = "Scene not added in Build Settings і не буде включена в білд";
 
-                if (GUI.Button(buttonRect1, new GUIContent("Додати", "Додати сцену в Build Settings"), EditorStyles.miniButton))
+                if (GUI.Button(buttonRect1, new GUIContent("Add", "Add scene to Build Settings"), EditorStyles.miniButton))
                     BuildUtils.AddBuildScene(buildScene, true, true);
 
                 if (GUI.Button(buttonRect2, "Settings", EditorStyles.miniButton))
                     BuildUtils.OpenBuildSettings();
             } else if (buildScene.scene.enabled) {
                 statusContent.text = $"✓ Build Index: {buildScene.buildIndex}";
-                statusContent.tooltip = "Сцена в Build Settings і УВІМКНЕНА";
+                statusContent.tooltip = "Сцена в Build Settings і ENABLED";
 
-                if (GUI.Button(buttonRect1, "Вимкнути", EditorStyles.miniButton))
+                if (GUI.Button(buttonRect1, "Disable", EditorStyles.miniButton))
                     BuildUtils.SetBuildSceneState(buildScene, false);
 
-                if (GUI.Button(buttonRect2, "Видалити", EditorStyles.miniButton))
+                if (GUI.Button(buttonRect2, "Delete", EditorStyles.miniButton))
                     BuildUtils.RemoveBuildScene(buildScene);
             } else {
                 statusContent.text = $"○ Build Index: {buildScene.buildIndex} (вимкнено)";
-                statusContent.tooltip = "Сцена в Build Settings але ВИМКНЕНА";
+                statusContent.tooltip = "Scene in Build Settings but Disabled";
 
-                if (GUI.Button(buttonRect1, "Увімкнути", EditorStyles.miniButton))
+                if (GUI.Button(buttonRect1, "Enable", EditorStyles.miniButton))
                     BuildUtils.SetBuildSceneState(buildScene, true);
 
-                if (GUI.Button(buttonRect2, "Видалити", EditorStyles.miniButton))
+                if (GUI.Button(buttonRect2, "Disable", EditorStyles.miniButton))
                     BuildUtils.RemoveBuildScene(buildScene);
             }
 

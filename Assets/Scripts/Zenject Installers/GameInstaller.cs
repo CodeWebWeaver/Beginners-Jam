@@ -4,6 +4,7 @@ using Zenject;
 public class GameInstaller : MonoInstaller {
     [SerializeField] private GameBootstrapper _gameBootstrapper;
     [SerializeField] private RandomServiceSettings _randomServiceSettings;
+    [SerializeField] private SceneData _sceneData;
     public override void InstallBindings() {
         Container.Bind<GameBootstrapper>()
         .FromComponentInNewPrefab(_gameBootstrapper)
@@ -44,8 +45,10 @@ public class GameInstaller : MonoInstaller {
 
         Container.Bind<IStateFactory>().To<StateFactory>().AsSingle();
 
-        Container.Bind<BootstrapState>().AsSingle();
+        Container.Bind<BootstrapState>().AsSingle().WithArguments(_sceneData);
         Container.Bind<LoadingLevelState>().AsSingle();
+        Container.Bind<LoadingMainMenuState>().AsSingle().WithArguments(_sceneData);
+        Container.Bind<MainMenuState>().AsSingle();
         Container.Bind<GameLoopState>().AsSingle();
         Container.Bind<ExitState>().AsSingle();
     }
