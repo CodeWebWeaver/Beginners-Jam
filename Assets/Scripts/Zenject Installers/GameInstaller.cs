@@ -5,11 +5,17 @@ public class GameInstaller : MonoInstaller {
     [SerializeField] private GameBootstrapper _gameBootstrapper;
     [SerializeField] private RandomServiceSettings _randomServiceSettings;
     [SerializeField] private SceneData _sceneData;
+    [SerializeField] private UIManager _uiManager;
     public override void InstallBindings() {
         Container.Bind<GameBootstrapper>()
         .FromComponentInNewPrefab(_gameBootstrapper)
         .AsSingle()
         .NonLazy();
+
+        Container.BindInterfacesAndSelfTo<UIManager>()
+            .FromComponentInNewPrefab(_uiManager)
+            .AsSingle()
+            .NonLazy();
 
         BindSavings();
 
@@ -23,10 +29,9 @@ public class GameInstaller : MonoInstaller {
         Container.Bind<IAudioService>().To<FmodAudioService>().AsSingle();
         Container.Bind<IRandomService>().To<RandomService>().AsSingle().WithArguments(_randomServiceSettings);
 
-        Container.Bind<IUiService>().To<UiService>().AsSingle();
         Container.Bind<ILevelProgressService>().To<LevelProgressService>().AsSingle();
         Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
-        Container.Bind<ILoadingScreenService>().To<LoadingScreenService>().AsSingle();
+        Container.Bind<ISceneTransitionManager>().To<SceneTransitionManager>().AsSingle();
 
         //Systems
 

@@ -1,47 +1,96 @@
+using System.Collections;
 using UnityEngine;
-
 public class UIPanel : MonoBehaviour {
-    [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private float _fadeDuration = 0.2f;
-   
-    public virtual void Show() {
-        gameObject.SetActive(true);
-        if (_canvasGroup != null) {
-            StartCoroutine(FadeIn());
+    [SerializeField] protected CanvasGroup canvasGroup;
+    [SerializeField] protected float fadeInDuration = 0f;
+    [SerializeField] protected float fadeOutDuration = 0.3f;
+
+    public bool IsOpen { get; private set; }
+
+    private Coroutine currentFadeCoroutine;
+
+    protected virtual void Awake() {
+        if (canvasGroup == null) {
+            canvasGroup = GetComponent<CanvasGroup>();
         }
+
+        SetPanelState(false, 0f);
+    }
+
+    public virtual void Show() {
+        if (currentFadeCoroutine != null) {
+            StopCoroutine(currentFadeCoroutine);
+        }
+
+        IsOpen = true;
+        currentFadeCoroutine = StartCoroutine(FadeIn());
     }
 
     public virtual void Hide() {
-        if (_canvasGroup != null) {
-            StartCoroutine(FadeOut());
-        } else {
-            gameObject.SetActive(false);
+        if (currentFadeCoroutine != null) {
+            StopCoroutine(currentFadeCoroutine);
         }
+
+        IsOpen = false;
+        currentFadeCoroutine = StartCoroutine(FadeOut());
     }
 
-    private System.Collections.IEnumerator FadeIn() {
-        _canvasGroup.alpha = 0;
-        float elapsed = 0;
+    protected virtual IEnumerator FadeIn() {
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
 
-        while (elapsed < _fadeDuration) {
-            _canvasGroup.alpha = Mathf.Lerp(0, 1, elapsed / _fadeDuration);
-            elapsed += Time.deltaTime;
+        if (fadeInDuration <= 0f) {
+            canvasGroup.alpha = 1f;
+            currentFadeCoroutine = null;
+            yield break;
+        }
+
+        float startAlpha = canvasGroup.alpha;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeInDuration) {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, 1f, elapsedTime / fadeInDuration);
             yield return null;
         }
 
-        _canvasGroup.alpha = 1;
+        canvasGroup.alpha = 1f;
+        currentFadeCoroutine = null;
     }
 
-    private System.Collections.IEnumerator FadeOut() {
-        float elapsed = 0;
+    protected virtual IEnumerator FadeOut() {
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.interactable = false;
 
-        while (elapsed < _fadeDuration) {
-            _canvasGroup.alpha = Mathf.Lerp(1, 0, elapsed / _fadeDuration);
-            elapsed += Time.deltaTime;
+        if (fadeOutDuration <= 0f) {
+            canvasGroup.alpha = 0f;
+            currentFadeCoroutine = null;
+            yield break;
+        }
+
+        float startAlpha = canvasGroup.alpha;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeOutDuration) {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, elapsedTime / fadeOutDuration);
             yield return null;
         }
 
-        _canvasGroup.alpha = 0;
-        gameObject.SetActive(false);
+        canvasGroup.alpha = 0f;
+        currentFadeCoroutine = null;
+    }
+
+    private void SetPanelState(bool isVisible, float alpha) {
+        canvasGroup.alpha = alpha;
+        canvasGroup.blocksRaycasts = isVisible;
+        canvasGroup.interactable = isVisible;
+        IsOpen = isVisible;
+    }
+
+    protected virtual void OnDestroy() {
+        if (currentFadeCoroutine != null) {
+            StopCoroutine(currentFadeCoroutine);
+        }
     }
 }

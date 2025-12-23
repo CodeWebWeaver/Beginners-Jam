@@ -1,5 +1,5 @@
 public interface ILoadingScreenService {
-    void Show();
-    void Hide();
-    void UpdateProgress(float progress);
+    void ShowLoading();
+    void HideLoading();
+    void UpdateLoadingProgress(float progress);
 }
