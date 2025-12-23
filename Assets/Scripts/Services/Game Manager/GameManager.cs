@@ -29,6 +29,10 @@ public class GameManager : IGameManager {
         Application.Quit();
 #endif
     }
+
+    public void OpenMenu() {
+        _gameStateMachine.ChangeState<LoadingMainMenuState>();
+    }
 }
 
 
