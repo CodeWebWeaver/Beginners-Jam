@@ -3,7 +3,6 @@ public interface IGameManager {
     void StartNewGame();
     void ExitToMainMenu();
     void ExitGame();
-    void PauseGame();
-    void ResumeGame();
+    void TogglePause();
 }
 

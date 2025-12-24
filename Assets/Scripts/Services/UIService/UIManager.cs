@@ -5,15 +5,10 @@ using Zenject;
 public class UIManager : MonoBehaviour, IUiService {
     [SerializeField] PauseMenuUI pauseUI;
     [SerializeField] LoadingScreenUI loading;
-    [Inject] IGameManager gameManager;
-
     public LoadingScreenUI LoadingUI => loading;
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            gameManager.ExitToMainMenu();
-        }
-    }
+    public PauseMenuUI PauseUI => pauseUI;
+
     public void TogglePanel(UIPanel panel) {
         if (panel.IsOpen) {
             panel.Hide();

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PauseState : State {
     private IUiService _uiService;
-    public PauseState(IStateMachine stateMachine) : base(stateMachine) {
+    public PauseState(IStateMachine stateMachine, IUiService uiService) : base(stateMachine) {
+        _uiService = uiService;
     }
 
     public override void Enter() {
