@@ -6,6 +6,8 @@ public class GameInstaller : MonoInstaller {
     [SerializeField] private RandomServiceSettings _randomServiceSettings;
     [SerializeField] private SceneData _sceneData;
     [SerializeField] private UIManager _uiManager;
+    [SerializeField] private GameController gameController;
+    
     public override void InstallBindings() {
         Container.Bind<GameBootstrapper>()
         .FromComponentInNewPrefab(_gameBootstrapper)
@@ -25,6 +27,9 @@ public class GameInstaller : MonoInstaller {
         Container.Bind<IDataSerializer>().To<JsonSerializer>().AsSingle();
 
         Container.Bind<IGameManager>().To<GameManager>().AsSingle();
+
+        Container.Bind<GameController>().AsSingle().NonLazy(); ;
+        Container.Bind<InputManager>().AsSingle().NonLazy();
 
         //Services
         Container.Bind<IAudioService>().To<FmodAudioService>().AsSingle();

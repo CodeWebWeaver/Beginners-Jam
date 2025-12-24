@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -22,14 +23,21 @@ public class GameManager : IGameManager {
     }
 
     #region Pause/Resume
+    public void TogglePause() {
+        bool isPaused = _gameStateMachine.CurrentState is PauseState;
+        if (isPaused) {
+            ResumeGame();
+        } else {
+            PauseGame();
+        }
+    }
+
     public void PauseGame() {
         _gameStateMachine.ChangeState<PauseState>();
     }
 
     public void ResumeGame() {
-        if (_gameStateMachine.CurrentState is PauseState) {
-            _gameStateMachine.ChangeState<GameLoopState>();
-        }
+        _gameStateMachine.ChangeState<GameLoopState>();
     }
     #endregion
 

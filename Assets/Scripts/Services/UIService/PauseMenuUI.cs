@@ -12,15 +12,11 @@ public class PauseMenuUI : UIPanel {
     }
 
     private void OnContinueButtonClicked() {
-        gameManager.ResumeGame();
+        gameManager.TogglePause(); // here is error sometimes ui needs just close not pause
     }
 
-    public override void Show() {
-        Time.timeScale = 0f;
-        base.Show();
-    }
-    public override void Hide() {
-        Time.timeScale = 1f;
-        base.Hide();
+    protected override void OnDestroy() {
+        base.OnDestroy();
+        continueBurron.onClick.RemoveListener(OnContinueButtonClicked);
     }
 }
