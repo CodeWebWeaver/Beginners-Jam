@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class GameLoopState : State {
     public GameLoopState(IStateMachine stateMachine) : base(stateMachine) {
     }
@@ -9,3 +11,4 @@ public class GameLoopState : State {
     public override void Exit() {
     }
 }
+

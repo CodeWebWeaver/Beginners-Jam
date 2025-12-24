@@ -1,96 +1,93 @@
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
+
 public class UIPanel : MonoBehaviour {
     [SerializeField] protected CanvasGroup canvasGroup;
-    [SerializeField] protected float fadeInDuration = 0f;
+    [SerializeField] protected float fadeInDuration = 0.2f;
     [SerializeField] protected float fadeOutDuration = 0.3f;
+    [SerializeField] protected Ease fadeInEase = Ease.OutQuad;
+    [SerializeField] protected Ease fadeOutEase = Ease.InQuad;
 
     public bool IsOpen { get; private set; }
 
-    private Coroutine currentFadeCoroutine;
+    private Tween _currentTween;
 
     protected virtual void Awake() {
         if (canvasGroup == null) {
-            canvasGroup = GetComponent<CanvasGroup>();
+            canvasGroup = GetComponentInChildren<CanvasGroup>();
         }
 
-        SetPanelState(false, 0f);
+        SetImmediateState(false);
     }
 
     public virtual void Show() {
-        if (currentFadeCoroutine != null) {
-            StopCoroutine(currentFadeCoroutine);
-        }
+        _currentTween?.Kill();
 
         IsOpen = true;
-        currentFadeCoroutine = StartCoroutine(FadeIn());
-    }
+        gameObject.SetActive(true);
 
-    public virtual void Hide() {
-        if (currentFadeCoroutine != null) {
-            StopCoroutine(currentFadeCoroutine);
-        }
-
-        IsOpen = false;
-        currentFadeCoroutine = StartCoroutine(FadeOut());
-    }
-
-    protected virtual IEnumerator FadeIn() {
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
 
         if (fadeInDuration <= 0f) {
             canvasGroup.alpha = 1f;
-            currentFadeCoroutine = null;
-            yield break;
+            OnShowComplete();
+            return;
         }
 
-        float startAlpha = canvasGroup.alpha;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < fadeInDuration) {
-            elapsedTime += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, 1f, elapsedTime / fadeInDuration);
-            yield return null;
-        }
-
-        canvasGroup.alpha = 1f;
-        currentFadeCoroutine = null;
+        _currentTween = canvasGroup
+            .DOFade(1f, fadeInDuration)
+            .SetEase(fadeInEase)
+            .SetUpdate(true)
+            .OnComplete(OnShowComplete);
     }
 
-    protected virtual IEnumerator FadeOut() {
+    public virtual void Hide() {
+        _currentTween?.Kill();
+
+        IsOpen = false;
+
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
 
         if (fadeOutDuration <= 0f) {
             canvasGroup.alpha = 0f;
-            currentFadeCoroutine = null;
-            yield break;
+            gameObject.SetActive(false);
+            OnHideComplete();
+            return;
         }
 
-        float startAlpha = canvasGroup.alpha;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < fadeOutDuration) {
-            elapsedTime += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, elapsedTime / fadeOutDuration);
-            yield return null;
-        }
-
-        canvasGroup.alpha = 0f;
-        currentFadeCoroutine = null;
+        _currentTween = canvasGroup
+            .DOFade(0f, fadeOutDuration)
+            .SetEase(fadeOutEase)
+            .SetUpdate(true)
+            .OnComplete(() => {
+                gameObject.SetActive(false);
+                OnHideComplete();
+            });
     }
 
-    private void SetPanelState(bool isVisible, float alpha) {
-        canvasGroup.alpha = alpha;
+    public void SetImmediateState(bool isVisible) {
+        _currentTween?.Kill();
+
+        IsOpen = isVisible;
+        canvasGroup.alpha = isVisible ? 1f : 0f;
         canvasGroup.blocksRaycasts = isVisible;
         canvasGroup.interactable = isVisible;
-        IsOpen = isVisible;
+        gameObject.SetActive(isVisible);
+
+        if (isVisible) {
+            OnShowComplete();
+        } else {
+            OnHideComplete();
+        }
     }
 
+    protected virtual void OnShowComplete() { }
+    protected virtual void OnHideComplete() { }
+
     protected virtual void OnDestroy() {
-        if (currentFadeCoroutine != null) {
-            StopCoroutine(currentFadeCoroutine);
-        }
+        _currentTween?.Kill();
     }
 }

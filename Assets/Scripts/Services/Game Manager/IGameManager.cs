@@ -1,6 +1,9 @@
 public interface IGameManager {
-    void ExitGame();
-    void OpenMenu();
+    void ContinueGame();
     void StartNewGame();
+    void ExitToMainMenu();
+    void ExitGame();
+    void PauseGame();
+    void ResumeGame();
 }
 

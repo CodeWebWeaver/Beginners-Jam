@@ -16,6 +16,7 @@ public class GameInstaller : MonoInstaller {
             .FromComponentInNewPrefab(_uiManager)
             .AsSingle()
             .NonLazy();
+        Container.Bind<ILoadingScreenService>().To<LoadingScreenService>().AsSingle();
 
         BindSavings();
 
@@ -55,6 +56,7 @@ public class GameInstaller : MonoInstaller {
         Container.Bind<LoadingMainMenuState>().AsSingle().WithArguments(_sceneData);
         Container.Bind<MainMenuState>().AsSingle();
         Container.Bind<GameLoopState>().AsSingle();
+        Container.Bind<PauseState>().AsSingle();
         Container.Bind<ExitState>().AsSingle();
     }
 }

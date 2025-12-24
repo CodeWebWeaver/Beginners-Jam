@@ -10,16 +10,31 @@ public class GameManager : IGameManager {
         _gameStateMachine = stateMachine;
         _levelProgress = levelProgress;
     }
+
     public void StartNewGame() {
         Debug.Log("Game Started!");
-        // Load current level or initialize game state here
         _levelProgress.SetProgress(new LevelProgress { CurrentLevel = 1 });
         _gameStateMachine.ChangeState<LoadingLevelState>();
     }
 
-    private void ProceedToLevel(int level) {
-        // Logic to load the specified level
-        Debug.Log($"Loading Level {level}...");
+    public void ContinueGame() {
+        _gameStateMachine.ChangeState<LoadingLevelState>();
+    }
+
+    #region Pause/Resume
+    public void PauseGame() {
+        _gameStateMachine.ChangeState<PauseState>();
+    }
+
+    public void ResumeGame() {
+        if (_gameStateMachine.CurrentState is PauseState) {
+            _gameStateMachine.ChangeState<GameLoopState>();
+        }
+    }
+    #endregion
+
+    public void ExitToMainMenu() {
+        _gameStateMachine.ChangeState<LoadingMainMenuState>();
     }
 
     public void ExitGame() {
@@ -28,10 +43,6 @@ public class GameManager : IGameManager {
 #else
         Application.Quit();
 #endif
-    }
-
-    public void OpenMenu() {
-        _gameStateMachine.ChangeState<LoadingMainMenuState>();
     }
 }
 
