@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3f9d24a69e3854ab3b29bba136b8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIPanel
-  canvasGroup: {fileID: 9056398612625934767}
+  innerBody: {fileID: 9056398612625934767}
   fadeInDuration: 0
   fadeOutDuration: 0.3
 --- !u!1 &5456803963575808999

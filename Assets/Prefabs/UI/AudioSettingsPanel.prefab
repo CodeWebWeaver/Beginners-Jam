@@ -158,6 +158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioSettingsPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5175172187848628698, guid: a45552ddf228bf648982a840cfc13910, type: 3}
+      propertyPath: innerBody
+      value: 
+      objectReference: {fileID: 8561430234366712623}
     - target: {fileID: 8051469233311088537, guid: a45552ddf228bf648982a840cfc13910, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.019989014
@@ -177,6 +181,11 @@ PrefabInstance:
 --- !u!224 &2683217976461853677 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3333281060248932717, guid: a45552ddf228bf648982a840cfc13910, type: 3}
+  m_PrefabInstance: {fileID: 828246708413485696}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &8561430234366712623 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 9056398612625934767, guid: a45552ddf228bf648982a840cfc13910, type: 3}
   m_PrefabInstance: {fileID: 828246708413485696}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4887371267680391580

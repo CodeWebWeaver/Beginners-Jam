@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8de2c3e05124614486f3a80d7284029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadingScreenService
-  canvasGroup: {fileID: 7746775812218915921}
+  innerBody: {fileID: 7746775812218915921}
   fadeInDuration: 0
   fadeOutDuration: 2
   loadingSlider: {fileID: 6886754941160655635}
